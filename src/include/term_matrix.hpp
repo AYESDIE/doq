@@ -13,7 +13,7 @@ namespace doq
 class term_matrix
 {
 private:
-  std::vector<std::vector<std::string>> matrix;
+  std::vector<size_t> matrix;
 };
 }
 

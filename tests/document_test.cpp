@@ -9,6 +9,7 @@
 TEST_CASE("DocumentTest", "[DocumentTest]")
 {
   doq::document D1("data/document_test.txt");
+  REQUIRE(D1.getFileName() == std::string("document_test.txt"));
   REQUIRE(D1[0] == 't');
   REQUIRE(D1[1] == 'e');
   REQUIRE(D1[2] == 's');

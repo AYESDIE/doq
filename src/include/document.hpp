@@ -33,8 +33,11 @@ public:
   auto end();
   auto &operator[](size_t);
 
+  const std::string &getFileName() const;
+
 private:
   std::string doc;
+  std::string file_name;
 };
 
 document::document(const std::string &file_location) {
@@ -47,6 +50,26 @@ document::document(const std::string &file_location) {
 
     fin.close();
   }
+
+  std::string temp;
+
+  for (auto i = file_location.end(); i != file_location.begin() ; --i)
+  {
+    if (*i == '/')
+      break;
+
+    if (*i == '\0')
+      continue;
+
+    temp += *i;
+  }
+  
+  file_name = temp;
+  for (int i = 0; file_name[i] != '\0'; i++)
+  {
+    file_name[i] = temp[temp.size() - 1 - i];
+  }
+
 }
 
 document::document(const doq::document &doq) {
@@ -64,6 +87,11 @@ auto document::begin() {
 auto document::end() {
   return doc.end();
 }
+
+const std::string &document::getFileName() const {
+  return file_name;
+}
+
 } // namespace doq
 
 #endif //DOQ_DOCUMENT_HPP
