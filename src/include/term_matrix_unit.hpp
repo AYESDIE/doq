@@ -2,12 +2,13 @@
 // Created by ayesdie on 02/10/19.
 //
 
-#ifndef DOQ_TERM_MATRIX_UNIT_HPP
-#define DOQ_TERM_MATRIX_UNIT_HPP
-
 #include <bitset>
 #include <string>
 #include <cctype>
+#include <ostream>
+
+#ifndef DOQ_TERM_MATRIX_UNIT_HPP
+#define DOQ_TERM_MATRIX_UNIT_HPP
 
 namespace doq {
 template<size_t N>
@@ -15,22 +16,18 @@ class term_matrix_unit {
 public:
   term_matrix_unit(const std::string &term);
 
-  const std::bitset <N> &getUnit() const;
+  const std::bitset<N>& getBitset() const;
 
-  const std::string &getTerm() const;
+  const std::string& getTerm() const;
 
   bool operator<(const term_matrix_unit &rhs) const;
-
   bool operator>(const term_matrix_unit &rhs) const;
-
   bool operator<=(const term_matrix_unit &rhs) const;
-
   bool operator>=(const term_matrix_unit &rhs) const;
-
   auto operator[](size_t i);
 
 private:
-  std::bitset <N> unit;
+  std::bitset<N> bitset;
   std::string term;
 };
 
@@ -38,16 +35,13 @@ template<size_t N>
 term_matrix_unit<N>::term_matrix_unit(const std::string &term)
 {
   this->term = term;
-  std::transform(this->term.begin(), this->term.end(), this->term.begin(),
-    [](unsigned char c){ return std::tolower(c); });
-
-  unit.reset();
+  bitset.reset();
 }
 
 template<size_t N>
-const std::bitset <N> &term_matrix_unit<N>::getUnit() const
+const std::bitset <N> &term_matrix_unit<N>::getBitset() const
 {
-  return unit;
+  return bitset;
 }
 
 template<size_t N>
@@ -83,7 +77,7 @@ bool term_matrix_unit<N>::operator>=(const term_matrix_unit &rhs) const
 template<size_t N>
 auto term_matrix_unit<N>::operator[](size_t i)
 {
-  return unit[i];
+  return bitset[i];
 }
 }
 

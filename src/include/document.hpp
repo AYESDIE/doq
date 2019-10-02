@@ -2,11 +2,11 @@
 // Created by ayesdie on 30/09/19.
 //
 
-#ifndef DOQ_DOCUMENT_HPP
-#define DOQ_DOCUMENT_HPP
-
 #include <fstream>
 #include <ostream>
+
+#ifndef DOQ_DOCUMENT_HPP
+#define DOQ_DOCUMENT_HPP
 
 namespace doq
 {
@@ -23,18 +23,12 @@ public:
    */
   document(const std::string &file_location);
 
-  /**
-   * Copy constructor for document;
-   * @param doq - Document
-   */
-  document(const doq::document& doq);
-
-  auto begin();
-  auto end();
-  auto size();
+  auto begin() const;
+  auto end() const;
+  auto size() const;
   auto &operator[](size_t);
 
-  const std::string &getFileName() const;
+  const std::string& getFileName() const;
 
 private:
   std::string doc;
@@ -73,22 +67,17 @@ document::document(const std::string &file_location)
   }
 }
 
-document::document(const doq::document &doq)
-{
-  doc = doq.doc;
-}
-
-auto document::begin()
+auto document::begin() const
 {
   return doc.begin();
 }
 
-auto document::end()
+auto document::end() const
 {
   return doc.end();
 }
 
-auto document::size()
+auto document::size() const
 {
   return doc.size();
 }
@@ -98,9 +87,9 @@ auto &document::operator[](size_t index)
   return doc[index];
 }
 
-const std::string &document::getFileName() const
+const std::string& document::getFileName() const
 {
-  return file_name;
+  return this->file_name;
 }
 
 } // namespace doq
