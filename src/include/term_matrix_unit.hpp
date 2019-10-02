@@ -14,17 +14,29 @@ namespace doq {
 template<size_t N>
 class term_matrix_unit {
 public:
-  term_matrix_unit(const std::string &term);
+  /**
+   * Unit for term_matrix
+   * @param term - Term to be stored.
+   */
+  inline term_matrix_unit(const std::string &term);
 
-  const std::bitset<N>& getBitset() const;
+  /**
+   * Returns term_matrix_unit.bitset.
+   * @return - term_matrix_unit.bitset
+   */
+  inline const std::bitset<N>& getBitset() const;
 
-  const std::string& getTerm() const;
+  /**
+   * Returns term_matrix_unit.term.
+   * @return - term_matrix_unit.term
+   */
+  inline const std::string& getTerm() const;
 
-  bool operator<(const term_matrix_unit &rhs) const;
-  bool operator>(const term_matrix_unit &rhs) const;
-  bool operator<=(const term_matrix_unit &rhs) const;
-  bool operator>=(const term_matrix_unit &rhs) const;
-  auto operator[](size_t i);
+  inline bool operator<(const term_matrix_unit &rhs) const;
+  inline bool operator>(const term_matrix_unit &rhs) const;
+  inline bool operator<=(const term_matrix_unit &rhs) const;
+  inline bool operator>=(const term_matrix_unit &rhs) const;
+  inline auto operator[](size_t i);
 
 private:
   std::bitset<N> bitset;

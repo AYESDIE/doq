@@ -19,6 +19,21 @@ TEST_CASE("TermMatrixTest", "[TermMatrixTest]")
   TM.addDocument(D1, D2, D3, D4, D5, D6);
 
 
-  TM.stat(TM["Denmark"] | TM["Africa"]);
-  TM.showMatrix();
+  auto U =TM["Denmark"] | TM["Africa"];
+
+  REQUIRE(U[0] == false);
+  REQUIRE(U[1] == true);
+  REQUIRE(U[2] == false);
+  REQUIRE(U[3] == true);
+  REQUIRE(U[4] == false);
+  REQUIRE(U[5] == false);
+
+  U = TM["Pewdiepie"];
+
+  REQUIRE(U[0] == false);
+  REQUIRE(U[1] == false);
+  REQUIRE(U[2] == false);
+  REQUIRE(U[3] == false);
+  REQUIRE(U[4] == false);
+  REQUIRE(U[5] == false);
 }
