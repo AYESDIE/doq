@@ -31,6 +31,7 @@ public:
 
   auto begin();
   auto end();
+  auto size();
   auto &operator[](size_t);
 
   const std::string &getFileName() const;
@@ -40,7 +41,8 @@ private:
   std::string file_name;
 };
 
-document::document(const std::string &file_location) {
+document::document(const std::string &file_location)
+{
   std::ifstream fin(file_location);
 
   if(fin)
@@ -69,26 +71,35 @@ document::document(const std::string &file_location) {
   {
     file_name[i] = temp[temp.size() - 1 - i];
   }
-
 }
 
-document::document(const doq::document &doq) {
+document::document(const doq::document &doq)
+{
   doc = doq.doc;
 }
 
-auto &document::operator[](size_t index) {
-  return doc[index];
-}
-
-auto document::begin() {
+auto document::begin()
+{
   return doc.begin();
 }
 
-auto document::end() {
+auto document::end()
+{
   return doc.end();
 }
 
-const std::string &document::getFileName() const {
+auto document::size()
+{
+  return doc.size();
+}
+
+auto &document::operator[](size_t index)
+{
+  return doc[index];
+}
+
+const std::string &document::getFileName() const
+{
   return file_name;
 }
 
