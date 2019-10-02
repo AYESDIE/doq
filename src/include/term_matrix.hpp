@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <string>
+#include <bitset>
+#include "term_matrix_unit.hpp"
 
 namespace doq
 {

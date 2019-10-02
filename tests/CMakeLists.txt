@@ -3,7 +3,8 @@ project(doq_tests CXX)
 set(DOQ_TESTS_SOURCES
     main.cpp
     document_test.cpp
-    term_matrix_test.cpp)
+    term_matrix_test.cpp
+    term_matrix_unit_test.cpp)
 
 add_executable(${PROJECT_NAME} ${DOQ_TESTS_SOURCES})
 
