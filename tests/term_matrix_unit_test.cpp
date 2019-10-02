@@ -3,7 +3,7 @@
 //
 
 #include "catch.hpp"
-#include "../src/doq.hpp"
+#include <doq.hpp>
 
 TEST_CASE("TermMatrixUnitTermTest", "[TermMatrixUnitTest]")
 {

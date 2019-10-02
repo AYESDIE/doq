@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <bitset>
+#include <algorithm>
 #include "term_matrix_unit.hpp"
 #include "document.hpp"
 

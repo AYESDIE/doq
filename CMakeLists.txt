@@ -4,7 +4,7 @@ project(doq CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(BEFORE "${CMAKE_SOURCE_DIR}/include/")
+include_directories(BEFORE "${CMAKE_SOURCE_DIR}/src/")
 
 # Install the headers to the correct location.
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/src/include"

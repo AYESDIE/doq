@@ -3,8 +3,7 @@
 //
 
 #include "catch.hpp"
-#include "../src/doq.hpp"
-#include <iostream>
+#include <doq.hpp>
 
 TEST_CASE("DocumentNameTest", "[DocumentTest]")
 {
