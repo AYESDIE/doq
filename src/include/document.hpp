@@ -21,14 +21,17 @@ public:
    * Imports contents of a file and save it in a string.
    * @param file_location - Location of file
    */
-  document(const std::string &file_location);
+  inline document(const std::string &file_location);
 
-  auto begin() const;
-  auto end() const;
-  auto size() const;
-  auto &operator[](size_t);
+  inline auto begin() const;
+  inline auto end() const;
+  inline auto size() const;
+  inline auto &operator[](size_t);
 
-  const std::string& getFileName() const;
+  /**
+   * Returns the file name.
+   */
+  inline const std::string& getFileName() const;
 
 private:
   std::string doc;
@@ -39,13 +42,15 @@ document::document(const std::string &file_location)
 {
   std::ifstream fin(file_location);
 
-  if(fin)
+  if(!fin)
   {
-    doc = std::string((std::istreambuf_iterator<char>(fin)),
-       std::istreambuf_iterator<char>());
-
-    fin.close();
+    throw std::logic_error("Cannot open file");
   }
+
+  doc = std::string((std::istreambuf_iterator<char>(fin)),
+     std::istreambuf_iterator<char>());
+
+  fin.close();
 
   std::string temp;
 

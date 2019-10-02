@@ -18,19 +18,43 @@ template <size_t N>
 class term_matrix
 {
 public:
-  term_matrix();
+  inline term_matrix();
 
+  /**
+   * Parameterized constructor for term_matrix.
+   *
+   * @param D - doq::document
+   * @param Ds - variadic doq::document
+   */
   template <typename... I>
-  term_matrix(const doq::document& D, const I... Ds);
+  inline term_matrix(const doq::document& D, const I... Ds);
 
+  /**
+   * Adds document to term_matrix.
+   *
+   * @param D - doq::document
+   * @param Ds - variadic doq::document
+   */
   template <typename... T>
-  void addDocument(const doq::document& D, const T... Ds);
+  inline void addDocument(const doq::document& D, const T... Ds);
 
-  void stat();
-  void stat(std::bitset<N> bitset);
-  void showMatrix();
+  /**
+   * Display stats for term_matrix.
+   */
+  inline void stat();
 
-  auto operator[](const std::string& S);
+  /**
+   * Display stat for given bitset.
+   * @param bitset - Query
+   */
+  inline void stat(std::bitset<N> bitset);
+
+  /**
+   * Display term_matrix.
+   */
+  inline void showMatrix();
+
+  inline auto operator[](const std::string& S);
 
 private:
   std::vector<doq::term_matrix_unit<N>> matrix;
@@ -39,11 +63,11 @@ private:
   size_t MAX_SIZE;
   size_t SIZE;
 
-  void addDocument();
+  inline void addDocument();
 
-  void addTerm(const std::string& S, const size_t& index);
+  inline void addTerm(const std::string& S, const size_t& index);
 
-  size_t documentIndex(const std::string& documentName);
+  inline size_t documentIndex(const std::string& documentName);
 };
 
 template<size_t N>
