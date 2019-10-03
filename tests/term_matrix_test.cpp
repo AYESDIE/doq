@@ -15,7 +15,9 @@ TEST_CASE("TermMatrixTest", "[TermMatrixTest]")
                 D5("data/romeo_and_juliet.txt"),
                 D6("data/the_tempest.txt");
 
-  doq::term_matrix<6> TM(D1, D2, D3, D4, D5, D6);
+  doq::term_matrix<doq::vanilla_tokenizer, 6> TM(doq::vanilla_tokenizer(),
+                                                 D1, D2, D3, D4, D5, D6);
+
 
   auto U = TM["Denmark"] || TM["Africa"];
 
