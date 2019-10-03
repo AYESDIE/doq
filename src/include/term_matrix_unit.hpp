@@ -38,6 +38,10 @@ public:
   inline bool operator>=(const term_matrix_unit &rhs) const;
   inline auto operator[](size_t i);
 
+  inline term_matrix_unit<N> operator&&(const term_matrix_unit& rhs);
+  inline term_matrix_unit<N> operator||(const term_matrix_unit& rhs);
+  inline term_matrix_unit<N> operator!();
+
 private:
   std::bitset<N> bitset;
   std::string term;
@@ -90,6 +94,30 @@ template<size_t N>
 auto term_matrix_unit<N>::operator[](size_t i)
 {
   return bitset[i];
+}
+
+template<size_t N>
+term_matrix_unit<N> term_matrix_unit<N>::operator&&(const term_matrix_unit &rhs)
+{
+  term_matrix_unit<N> result("(" + this->getTerm() + " AND " + rhs.getTerm() + ")");
+  result.bitset = this->bitset & rhs.bitset;
+  return result;
+}
+
+template<size_t N>
+term_matrix_unit<N> term_matrix_unit<N>::operator||(const term_matrix_unit &rhs)
+{
+  term_matrix_unit<N> result("(" + this->getTerm() + " OR " + rhs.getTerm() + ")");
+  result.bitset = this->bitset | rhs.bitset;
+  return result;
+}
+
+template<size_t N>
+term_matrix_unit<N> term_matrix_unit<N>::operator!()
+{
+  term_matrix_unit<N> result("( NOT " + this->getTerm() + ")");
+  result.bitset = ~this->bitset;
+  return result;
 }
 }
 
