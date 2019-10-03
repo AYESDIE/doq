@@ -48,14 +48,16 @@ public:
    * Display stat for given bitset.
    * @param bitset - Query
    */
-  inline void stat(std::bitset<N> bitset);
+  inline void stat(const term_matrix_unit<N>& bitset);
 
   /**
    * Display term_matrix.
    */
   inline void showMatrix();
 
-  inline auto operator[](const std::string& S);
+  inline term_matrix_unit<N> operator&&(const term_matrix_unit<N>& rhs);
+
+  inline term_matrix_unit<N> operator[](const std::string& S);
 
 private:
   std::vector<doq::term_matrix_unit<N>> matrix;
@@ -187,18 +189,16 @@ void term_matrix<N>::stat()
   std::cout << std::endl << "DISTINCT TERMS: " << matrix.size();
 }
 
-template<size_t N>
-auto term_matrix<N>::operator[](const std::string &S)
+  template<size_t N>
+term_matrix_unit<N> term_matrix<N>::operator[](const std::string &S)
 {
   for (auto unit : matrix)
   {
     if (unit.getTerm() == S)
-      return unit.getBitset();
+      return unit;
   }
 
-  std::bitset<N> temp;
-  temp.reset();
-  return temp;
+  return term_matrix_unit<N>("");
 }
 
 template<size_t N>
@@ -216,12 +216,13 @@ void term_matrix<N>::showMatrix()
 }
 
 template<size_t N>
-void term_matrix<N>::stat(std::bitset<N> bitset)
+void term_matrix<N>::stat(const term_matrix_unit<N>& unit)
 {
+  std::cout << std::endl << "TERM: " << unit.getTerm();
   std::cout << std::endl << "DOCUMENT:";
-  for (size_t i = 0; i < bitset.size(); ++i)
+  for (size_t i = 0; i < unit.getBitset().size(); ++i)
   {
-    if (bitset[i])
+    if (unit.getBitset()[i])
       std::cout << std::endl << " - " + document_list[i];
   }
 }

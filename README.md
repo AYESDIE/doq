@@ -22,7 +22,7 @@ int main()
 
     doq::term_matrix<2> TM(D1, D2);
     
-    TM.stat(TM["Brutus"] & TM["Caesar"] & ~TM["Calpurnia"]);
+    TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM["Calpurnia"]));
 
     return 0;
 }

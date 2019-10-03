@@ -17,7 +17,7 @@ TEST_CASE("TermMatrixTest", "[TermMatrixTest]")
 
   doq::term_matrix<6> TM(D1, D2, D3, D4, D5, D6);
 
-  auto U =TM["Denmark"] | TM["Africa"];
+  auto U = TM["Denmark"] || TM["Africa"];
 
   REQUIRE(U[0] == false);
   REQUIRE(U[1] == true);

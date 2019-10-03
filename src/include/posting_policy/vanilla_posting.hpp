@@ -21,17 +21,25 @@ public:
   template <typename... T>
   inline void addDocumentId(const size_t& Id, const T... Ts);
 
-  inline std::vector<size_t> operator&&(const vanilla_posting& rhs);
-  inline std::vector<size_t> operator||(const vanilla_posting& rhs);
+  inline vanilla_posting operator&&(const vanilla_posting& rhs);
+  inline vanilla_posting operator||(const vanilla_posting& rhs);
+  inline vanilla_posting operator!();
+
+  inline auto operator[](const size_t& index);
+  inline auto size();
 
   inline const std::string& getTerm() const;
   inline size_t getFrequency() const;
   inline const std::vector<size_t>& getDocumentId() const;
 
+  inline void setMaxSize(size_t maxSize);
+
 private:
   std::string term;
   size_t frequency;
   std::vector<size_t> document_id;
+
+  size_t MAX_SIZE;
 };
 
 vanilla_posting::vanilla_posting(const std::string &term) :
@@ -59,20 +67,21 @@ void vanilla_posting::addDocumentId(const size_t &Id, const T... Ts)
   }
 
   addDocumentId(Ts...);
+  MAX_SIZE = *(document_id.end() - 1);
 }
 
-std::vector<size_t> vanilla_posting::operator&&(const vanilla_posting& rhs)
+vanilla_posting vanilla_posting::operator&&(const vanilla_posting& rhs)
 {
   auto lhsiter = this->document_id.begin();
   auto rhsiter = rhs.document_id.begin();
 
-  std::vector<size_t> result;
+  vanilla_posting result("(" + this->getTerm() + " AND " + rhs.getTerm() + ")");
 
   while ((lhsiter != this->document_id.end()) && (rhsiter != rhs.document_id.end()))
   {
     if (*lhsiter == *rhsiter)
     {
-      result.push_back(*lhsiter);
+      result.addDocumentId(*lhsiter);
       lhsiter++;
       rhsiter++;
     }
@@ -85,43 +94,42 @@ std::vector<size_t> vanilla_posting::operator&&(const vanilla_posting& rhs)
       rhsiter++;
     }
   }
-
 
   return result;
 }
 
-std::vector<size_t> vanilla_posting::operator||(const vanilla_posting& rhs)
+vanilla_posting vanilla_posting::operator||(const vanilla_posting& rhs)
 {
   auto lhsiter = this->document_id.begin();
   auto rhsiter = rhs.document_id.begin();
 
-  std::vector<size_t> result;
+  vanilla_posting result("(" + this->getTerm() + " OR " + rhs.getTerm() + ")");
 
   while ((lhsiter != this->document_id.end()) && (rhsiter != rhs.document_id.end()))
   {
     if (*lhsiter == *rhsiter)
     {
-      result.push_back(*lhsiter);
+      result.addDocumentId(*lhsiter);
       lhsiter++;
       rhsiter++;
     }
     else if (*lhsiter < *rhsiter)
     {
-      result.push_back(*lhsiter);
+      result.addDocumentId(*lhsiter);
       lhsiter++;
     }
     else if (*lhsiter > *rhsiter)
     {
-      result.push_back(*rhsiter);
+      result.addDocumentId(*rhsiter);
       rhsiter++;
     }
   }
 
-  if (*(result.end() - 1) == *(this->document_id.end() - 1))
+  if (*(result.getDocumentId().end() - 1) == *(this->document_id.end() - 1))
   {
     while (rhsiter != rhs.document_id.end())
     {
-      result.push_back(*rhsiter);
+      result.addDocumentId(*rhsiter);
       rhsiter++;
     }
   }
@@ -129,12 +137,43 @@ std::vector<size_t> vanilla_posting::operator||(const vanilla_posting& rhs)
   {
     while (lhsiter != this->document_id.end())
     {
-      result.push_back(*lhsiter);
+      result.addDocumentId(*lhsiter);
       lhsiter++;
     }
   }
 
   return result;
+}
+
+vanilla_posting vanilla_posting::operator!()
+{
+  vanilla_posting result("(NOT " + this->getTerm() + ")");
+
+  auto iter = this->getDocumentId().begin();
+
+  for (size_t i = 0; i <= MAX_SIZE; ++i)
+  {
+    if (i == *iter)
+    {
+      iter++;
+    }
+    else
+    {
+      result.addDocumentId(i);
+    }
+  }
+
+  return result;
+}
+
+  auto vanilla_posting::operator[](const size_t &index)
+{
+  return document_id[index];
+}
+
+auto vanilla_posting::size()
+{
+  return document_id.size();
 }
 
 const std::string& vanilla_posting::getTerm() const
@@ -150,6 +189,11 @@ size_t vanilla_posting::getFrequency() const
 const std::vector<size_t>& vanilla_posting::getDocumentId() const
 {
   return document_id;
+}
+
+void vanilla_posting::setMaxSize(size_t maxSize)
+{
+  MAX_SIZE = maxSize;
 }
 }
 
