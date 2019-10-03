@@ -21,6 +21,11 @@ public:
   template <typename... T>
   inline void addDocumentId(const size_t& Id, const T... Ts);
 
+  inline bool operator<(const vanilla_posting &rhs) const;
+  inline bool operator>(const vanilla_posting &rhs) const;
+  inline bool operator<=(const vanilla_posting &rhs) const;
+  inline bool operator>=(const vanilla_posting &rhs) const;
+
   inline vanilla_posting operator&&(const vanilla_posting& rhs);
   inline vanilla_posting operator||(const vanilla_posting& rhs);
   inline vanilla_posting operator!();
@@ -194,6 +199,22 @@ const std::vector<size_t>& vanilla_posting::getDocumentId() const
 void vanilla_posting::setMaxSize(size_t maxSize)
 {
   MAX_SIZE = maxSize;
+}
+
+bool vanilla_posting::operator<(const vanilla_posting &rhs) const {
+  return term < rhs.term;
+}
+
+bool vanilla_posting::operator>(const vanilla_posting &rhs) const {
+  return rhs < *this;
+}
+
+bool vanilla_posting::operator<=(const vanilla_posting &rhs) const {
+  return !(rhs < *this);
+}
+
+bool vanilla_posting::operator>=(const vanilla_posting &rhs) const {
+  return !(*this < rhs);
 }
 }
 

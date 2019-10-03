@@ -1,8 +1,9 @@
 project(doq_tests CXX)
 
 set(DOQ_TESTS_SOURCES
-    main.cpp
     document_test.cpp
+    main.cpp
+    posting_list_test.cpp
     term_matrix_test.cpp
     term_matrix_unit_test.cpp
     vanilla_posting_test.cpp
