@@ -23,10 +23,12 @@ TEST_CASE("VanillaPostingAddDocumentTest", "[VanillaPostingTest]")
 {
   doq::vanilla_posting VP1("Apple"), VP2("bowl");
 
-  VP1.addDocumentId(1);
+  VP1.addDocumentId(0);
   REQUIRE(!VP1.getDocumentId().empty());
 
-  VP1.addDocumentId(4, 5, 9, 7);
+  VP1.addDocumentId(4);
+  VP1.addDocumentId(5);
+  VP1.addDocumentId(9, 7);
   REQUIRE(VP1.getFrequency() == 4);
   REQUIRE(*(VP1.getDocumentId().end() - 1) == 9);
 
