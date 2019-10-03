@@ -5,6 +5,7 @@ set(DOQ_TESTS_SOURCES
     document_test.cpp
     term_matrix_test.cpp
     term_matrix_unit_test.cpp
+    vanilla_posting_test.cpp
     )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

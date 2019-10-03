@@ -5,8 +5,10 @@
 #ifndef DOQ_HPP
 #define DOQ_HPP
 
+#include "include/posting_policy/vanilla_posting.hpp"
+
+#include "include/document.hpp"
 #include "include/term_matrix.hpp"
 #include "include/term_matrix_unit.hpp"
-#include "include/document.hpp"
 
 #endif //DOQ_HPP
