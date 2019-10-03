@@ -31,35 +31,57 @@ TEST_CASE("VanillaPostingAddDocumentTest", "[VanillaPostingTest]")
   REQUIRE(*(VP1.getDocumentId().end() - 1) == 9);
 
   VP2.addDocumentId(2, 4, 5);
-  REQUIRE(VP2.getDocumentId().size() == 3);
-  REQUIRE(VP2.getDocumentId()[2] == 5);
+  REQUIRE(VP2.size() == 3);
+  REQUIRE(VP2[2] == 5);
 }
 
 TEST_CASE("VanillaPostingAndOperationsTest", "[VanillaPostingTest]")
 {
   doq::vanilla_posting VP1("Apple"), VP2("bowl");
 
-  VP1.addDocumentId(1, 2, 3);
-  VP2.addDocumentId(1, 2, 3, 4);
+  VP1.addDocumentId(0, 1, 2);
+  VP2.addDocumentId(0, 1, 2, 3);
 
   auto U1 = VP1 && VP2;
 
   REQUIRE(U1.size() == 3);
-  REQUIRE(U1[0] == 1);
-  REQUIRE(U1[2] == 3);
+  REQUIRE(U1[0] == 0);
+  REQUIRE(U1[2] == 2);
 }
 
 TEST_CASE("VanillaPostingOrOperationsTest", "[VanillaPostingTest]")
 {
   doq::vanilla_posting VP1("Apple"), VP2("bowl");
 
-  VP1.addDocumentId(1, 2);
-  VP2.addDocumentId(3);
+  VP1.addDocumentId(0, 1);
+  VP2.addDocumentId(2);
 
   auto U2 = VP1 || VP2;
 
   REQUIRE(U2.size() == 3);
+  REQUIRE(U2[0] == 0);
+  REQUIRE(U2[1] == 1);
+  REQUIRE(U2[2] == 2);
+}
+
+TEST_CASE("VanillaPostingNotOperationsTest", "[VanillaPostingTest]")
+{
+  doq::vanilla_posting VP1("Apple"), VP2("bowl");
+
+  VP1.addDocumentId(0, 2);
+
+  auto U2 = !VP1;
+
+  REQUIRE(U2.size() == 1);
   REQUIRE(U2[0] == 1);
-  REQUIRE(U2[1] == 2);
-  REQUIRE(U2[2] == 3);
+
+  VP1.setMaxSize(3);
+  U2 = !VP1;
+
+  REQUIRE(U2.size() == 2);
+  REQUIRE(U2[0] == 1);
+  REQUIRE(U2[1] == 3);
+
+
+
 }
