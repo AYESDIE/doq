@@ -15,7 +15,8 @@
 
 namespace doq
 {
-template <size_t N>
+template <typename TokenizationPolicy,
+          size_t N>
 class term_matrix
 {
 public:
@@ -28,7 +29,7 @@ public:
    * @param Ds - variadic doq::document
    */
   template <typename... I>
-  inline term_matrix(const doq::document& D, const I... Ds);
+  inline term_matrix(TokenizationPolicy tokenizer, const doq::document& D, const I... Ds);
 
   /**
    * Adds document to term_matrix.
@@ -55,11 +56,10 @@ public:
    */
   inline void showMatrix();
 
-  inline term_matrix_unit<N> operator&&(const term_matrix_unit<N>& rhs);
-
   inline term_matrix_unit<N> operator[](const std::string& S);
 
 private:
+  TokenizationPolicy tokenizer;
   std::vector<doq::term_matrix_unit<N>> matrix;
   std::vector<std::string> document_list;
 
@@ -73,78 +73,61 @@ private:
   inline size_t documentIndex(const std::string& documentName);
 };
 
-template<size_t N>
-term_matrix<N>::term_matrix()
+template <typename TokenizationPolicy,
+          size_t N>
+term_matrix<TokenizationPolicy, N>::term_matrix()
 {
   MAX_SIZE = N;
   SIZE = 0;
 }
 
-template<size_t N>
+template <typename TokenizationPolicy,
+          size_t N>
 template<typename... I>
-term_matrix<N>::term_matrix(const doq::document& D, const I... Ds)
+term_matrix<TokenizationPolicy, N>::term_matrix(TokenizationPolicy tokenizer,
+                                                const doq::document& D,
+                                                const I... Ds)
 {
   MAX_SIZE = N;
   SIZE = 0;
+
+  this->tokenizer = tokenizer;
 
   addDocument(D, Ds...);
 }
 
-template<size_t N>
-void term_matrix<N>::addDocument()
+template <typename TokenizationPolicy,
+          size_t N>
+void term_matrix<TokenizationPolicy, N>::addDocument()
 {
   std::sort(matrix.begin(), matrix.end());
 }
 
-template<size_t N>
+template <typename TokenizationPolicy,
+          size_t N>
 template<typename... T>
-void term_matrix<N>::addDocument(const doq::document& D, const T... Ds)
+void term_matrix<TokenizationPolicy, N>::addDocument(const doq::document& D, const T... Ds)
 {
   if (SIZE == MAX_SIZE)
     return;
 
   document_list.push_back(D.getFileName());
+  tokenizer.setDocument(D);
 
-  std::string term;
-  term.clear();
-
-  for (auto ch : D)
+  std::string term = tokenizer.nextToken();
+  while (term != "\0")
   {
-    if ((ch == ' ') ||
-        (ch == '.') ||
-        (ch == ',') ||
-        (ch == ';') ||
-        (ch == '\'') ||
-        (ch == '"') ||
-        (ch == '(') ||
-        (ch == ')') ||
-        (ch == '!') ||
-        (ch == '-') ||
-        (ch == ':') ||
-        (ch == '0') ||
-        (ch == '\n') ||
-        (ch == '\t') ||
-        (ch == '\0'))
-    {
-      if (!term.empty())
-      {
-        addTerm(term, SIZE);
-        term.clear();
-      }
-    }
-    else
-    {
-      term += ch;
-    }
+    addTerm(term, SIZE);
+    term = tokenizer.nextToken();
   }
-  addTerm(term, SIZE);
 
   SIZE++;
   addDocument(Ds...);
 }
 
-template<size_t N>
-void term_matrix<N>::addTerm(const std::string& S, const size_t& index)
+template <typename TokenizationPolicy,
+          size_t N>
+void term_matrix<TokenizationPolicy, N>::addTerm(const std::string& S, const size_t& index)
 {
   for (int i = 0; i < matrix.size(); ++i)
   {
@@ -159,8 +142,9 @@ void term_matrix<N>::addTerm(const std::string& S, const size_t& index)
   matrix[matrix.size() - 1][index] = true;
 }
 
-template<size_t N>
-size_t term_matrix<N>::documentIndex(const std::string &documentName)
+template <typename TokenizationPolicy,
+          size_t N>
+size_t term_matrix<TokenizationPolicy, N>::documentIndex(const std::string &documentName)
 {
   size_t index = 0;
   for (auto docName : document_list)
@@ -174,8 +158,9 @@ size_t term_matrix<N>::documentIndex(const std::string &documentName)
   return -1;
 }
 
-template<size_t N>
-void term_matrix<N>::stat()
+template <typename TokenizationPolicy,
+          size_t N>
+void term_matrix<TokenizationPolicy, N>::stat()
 {
   std::cout << std::endl << "MAX_SIZE: " << MAX_SIZE;
   std::cout << std::endl << "SIZE: " << SIZE;
@@ -189,8 +174,9 @@ void term_matrix<N>::stat()
   std::cout << std::endl << "DISTINCT TERMS: " << matrix.size();
 }
 
-  template<size_t N>
-term_matrix_unit<N> term_matrix<N>::operator[](const std::string &S)
+  template <typename TokenizationPolicy,
+          size_t N>
+term_matrix_unit<N> term_matrix<TokenizationPolicy, N>::operator[](const std::string &S)
 {
   for (auto unit : matrix)
   {
@@ -201,8 +187,9 @@ term_matrix_unit<N> term_matrix<N>::operator[](const std::string &S)
   return term_matrix_unit<N>("");
 }
 
-template<size_t N>
-void term_matrix<N>::showMatrix()
+template <typename TokenizationPolicy,
+          size_t N>
+void term_matrix<TokenizationPolicy, N>::showMatrix()
 {
   std::cout << std::endl;
   for (auto unit : matrix)
@@ -215,8 +202,9 @@ void term_matrix<N>::showMatrix()
   }
 }
 
-template<size_t N>
-void term_matrix<N>::stat(const term_matrix_unit<N>& unit)
+template <typename TokenizationPolicy,
+          size_t N>
+void term_matrix<TokenizationPolicy, N>::stat(const term_matrix_unit<N>& unit)
 {
   std::cout << std::endl << "TERM: " << unit.getTerm();
   std::cout << std::endl << "DOCUMENT:";

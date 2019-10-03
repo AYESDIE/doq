@@ -17,10 +17,11 @@ Usage:
 
 int main()
 {
-    doq::document D1("julius_caesar.txt"),
+    document D1("julius_caesar.txt"),
                   D2("hamlet.txt");
 
-    doq::term_matrix<2> TM(D1, D2);
+    term_matrix<vanilla_tokenization, 2> TM(vanilla_tokenization(),
+                                            D1, D2);
     
     TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM["Calpurnia"]));
 

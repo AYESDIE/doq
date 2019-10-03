@@ -17,6 +17,8 @@ namespace doq
 class document
 {
 public:
+  inline document();
+
   /**
    * Imports contents of a file and save it in a string.
    * @param file_location - Location of file
@@ -37,6 +39,9 @@ private:
   std::string doc;
   std::string file_name;
 };
+
+document::document()
+{ /* does nothing */ }
 
 document::document(const std::string &file_location)
 {

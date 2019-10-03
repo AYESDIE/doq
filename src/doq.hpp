@@ -7,6 +7,8 @@
 
 #include "include/posting_policy/vanilla_posting.hpp"
 
+#include "include/tokenization_policy/vanilla_tokenizer.hpp"
+
 #include "include/document.hpp"
 #include "include/posting_list.hpp"
 #include "include/term_matrix.hpp"
