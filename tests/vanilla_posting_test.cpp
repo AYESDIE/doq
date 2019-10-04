@@ -7,7 +7,7 @@
 
 TEST_CASE("VanillaPostingBasicTest", "[VanillaPostingTest]")
 {
-  doq::vanilla_posting VP1("Apple"), VP2("bowl");
+  doq::VanillaPosting VP1("Apple"), VP2("bowl");
 
   REQUIRE(VP1.getTerm() == std::string("Apple"));
   REQUIRE(VP2.getTerm() == std::string("bowl"));
@@ -21,7 +21,7 @@ TEST_CASE("VanillaPostingBasicTest", "[VanillaPostingTest]")
 
 TEST_CASE("VanillaPostingAddDocumentTest", "[VanillaPostingTest]")
 {
-  doq::vanilla_posting VP1("Apple"), VP2("bowl");
+  doq::VanillaPosting VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0);
   REQUIRE(!VP1.getDocumentId().empty());
@@ -39,7 +39,7 @@ TEST_CASE("VanillaPostingAddDocumentTest", "[VanillaPostingTest]")
 
 TEST_CASE("VanillaPostingAndOperationsTest", "[VanillaPostingTest]")
 {
-  doq::vanilla_posting VP1("Apple"), VP2("bowl");
+  doq::VanillaPosting VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0, 1, 2);
   VP2.addDocumentId(0, 1, 2, 3);
@@ -53,7 +53,7 @@ TEST_CASE("VanillaPostingAndOperationsTest", "[VanillaPostingTest]")
 
 TEST_CASE("VanillaPostingOrOperationsTest", "[VanillaPostingTest]")
 {
-  doq::vanilla_posting VP1("Apple"), VP2("bowl");
+  doq::VanillaPosting VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0, 1);
   VP2.addDocumentId(2);
@@ -68,7 +68,7 @@ TEST_CASE("VanillaPostingOrOperationsTest", "[VanillaPostingTest]")
 
 TEST_CASE("VanillaPostingNotOperationsTest", "[VanillaPostingTest]")
 {
-  doq::vanilla_posting VP1("Apple"), VP2("bowl");
+  doq::VanillaPosting VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0, 2);
 

@@ -7,10 +7,10 @@
 
 TEST_CASE("VanillaTokenizationBasicTest", "[VanillaTokenizationTest]")
 {
-  doq::document D1("data/macbeth.txt"),
+  doq::Document D1("data/macbeth.txt"),
                 D2("data/othello.txt");
 
-  doq::vanilla_tokenizer VT;
+  doq::VanillaTokenizer VT;
   VT.setDocument(D1);
 
   REQUIRE(VT.nextToken() == "When");

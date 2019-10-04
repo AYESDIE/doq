@@ -14,25 +14,25 @@ namespace doq
 {
 template <typename TokenizationPolicy,
           typename PostingPolicy>
-class posting_list
+class PostingList
 {
 public:
 
-  inline posting_list();
+  inline PostingList();
 
   template <typename... T>
-  inline posting_list(const TokenizationPolicy&, const document&, const T...);
+  inline PostingList(const TokenizationPolicy& tokenizer, const Document& D, const T... Ds);
 
   inline void addDocument();
 
   template <typename... T>
-  inline void addDocument(const document&, const T...);
+  inline void addDocument(const Document& D, const T... Ds);
 
   inline void stat();
-  inline void stat(const PostingPolicy&);
+  inline void stat(const PostingPolicy& posting);
   inline void print();
 
-  inline PostingPolicy operator[](const std::string&);
+  inline PostingPolicy operator[](const std::string& S);
 
 private:
   TokenizationPolicy tokenizer;
@@ -45,16 +45,16 @@ private:
 };
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-posting_list<TokenizationPolicy, PostingPolicy>::posting_list()
+PostingList<TokenizationPolicy, PostingPolicy>::PostingList()
 {
   SIZE = 0;
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
 template<typename... T>
-posting_list<TokenizationPolicy, PostingPolicy>::posting_list(const TokenizationPolicy& tokenizer,
-                                                              const document& D,
-                                                              const T... Ds)
+PostingList<TokenizationPolicy, PostingPolicy>::PostingList(const TokenizationPolicy& tokenizer,
+                                                            const Document& D,
+                                                            const T... Ds)
 {
   SIZE = 0;
   this->tokenizer = tokenizer;
@@ -63,7 +63,7 @@ posting_list<TokenizationPolicy, PostingPolicy>::posting_list(const Tokenization
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-void posting_list<TokenizationPolicy, PostingPolicy>::addDocument()
+void PostingList<TokenizationPolicy, PostingPolicy>::addDocument()
 {
   std::sort(list.begin(), list.end());
 
@@ -75,7 +75,7 @@ void posting_list<TokenizationPolicy, PostingPolicy>::addDocument()
 
 template<typename TokenizationPolicy, typename PostingPolicy>
 template<typename... T>
-void posting_list<TokenizationPolicy, PostingPolicy>::addDocument(const document& D,
+void PostingList<TokenizationPolicy, PostingPolicy>::addDocument(const Document& D,
                                                                   const T... Ds)
 {
   document_list.push_back(D.getFileName());
@@ -93,7 +93,7 @@ void posting_list<TokenizationPolicy, PostingPolicy>::addDocument(const document
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-void posting_list<TokenizationPolicy, PostingPolicy>::addTerm(const std::string &S,
+void PostingList<TokenizationPolicy, PostingPolicy>::addTerm(const std::string &S,
                                                               const size_t &index)
 {
   for (int i = 0; i < list.size(); ++i)
@@ -110,7 +110,7 @@ void posting_list<TokenizationPolicy, PostingPolicy>::addTerm(const std::string 
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-void posting_list<TokenizationPolicy, PostingPolicy>::stat()
+void PostingList<TokenizationPolicy, PostingPolicy>::stat()
 {
   std::cout << std::endl << "DOCUMENTS: ";
   for (auto q : document_list)
@@ -121,7 +121,7 @@ void posting_list<TokenizationPolicy, PostingPolicy>::stat()
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-void posting_list<TokenizationPolicy, PostingPolicy>::print()
+void PostingList<TokenizationPolicy, PostingPolicy>::print()
 {
   for (auto u : list)
   {
@@ -135,7 +135,7 @@ void posting_list<TokenizationPolicy, PostingPolicy>::print()
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-PostingPolicy posting_list<TokenizationPolicy, PostingPolicy>::operator[](const std::string& S)
+PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const std::string& S)
 {
   for (auto u : list)
   {
@@ -149,7 +149,7 @@ PostingPolicy posting_list<TokenizationPolicy, PostingPolicy>::operator[](const 
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>
-void posting_list<TokenizationPolicy, PostingPolicy>::stat(const PostingPolicy &posting)
+void PostingList<TokenizationPolicy, PostingPolicy>::stat(const PostingPolicy &posting)
 {
   std::cout << std::endl << "TERM: " << posting.getTerm();
   std::cout << std::endl << "DOCUMENT:" ;

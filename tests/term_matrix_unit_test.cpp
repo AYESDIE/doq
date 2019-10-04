@@ -7,14 +7,14 @@
 
 TEST_CASE("TermMatrixUnitTermTest", "[TermMatrixUnitTest]")
 {
-  doq::term_matrix_unit<5> TMU1("Apple"), TMU2("bowl");
+  doq::TermMatrixUnit<5> TMU1("Apple"), TMU2("bowl");
   REQUIRE(TMU1.getTerm() == "Apple");
   REQUIRE(TMU2.getTerm() == "bowl");
 }
 
 TEST_CASE("TermMatrixUnitUnitTest", "[TermMatrixUnitTest]")
 {
-  doq::term_matrix_unit<5> TMU1("Apple"), TMU2("Bowl");
+  doq::TermMatrixUnit<5> TMU1("Apple"), TMU2("Bowl");
 
   TMU1[1] = true;
   TMU1[3] = true;

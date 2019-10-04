@@ -9,34 +9,34 @@
 
 namespace doq
 {
-class vanilla_tokenizer
+class VanillaTokenizer
 {
 public:
-  inline vanilla_tokenizer();
+  inline VanillaTokenizer();
 
-  inline void setDocument(const document& D);
+  inline void setDocument(const Document& D);
 
   inline const std::string nextToken();
 
 private:
-  document D;
+  Document D;
 
   size_t seek;
 };
 
-vanilla_tokenizer::vanilla_tokenizer()
+VanillaTokenizer::VanillaTokenizer()
 {
   seek = 0;
 }
 
-void vanilla_tokenizer::setDocument(const document &Doc)
+void VanillaTokenizer::setDocument(const Document &Doc)
 {
   this->D = Doc;
   seek = 0;
 }
 
 
-const std::string vanilla_tokenizer::nextToken()
+const std::string VanillaTokenizer::nextToken()
 {
   if (seek >= D.size())
     return std::string("\0");

@@ -14,16 +14,16 @@ namespace doq
 /**
  * Immutable Document based on standard containers.
  */
-class document
+class Document
 {
 public:
-  inline document();
+  inline Document();
 
   /**
    * Imports contents of a file and save it in a string.
    * @param file_location - Location of file
    */
-  inline document(const std::string &file_location);
+  inline Document(const std::string &file_location);
 
   inline auto begin() const;
   inline auto end() const;
@@ -40,10 +40,10 @@ private:
   std::string file_name;
 };
 
-document::document()
+Document::Document()
 { /* does nothing */ }
 
-document::document(const std::string &file_location)
+Document::Document(const std::string &file_location)
 {
   std::ifstream fin(file_location);
 
@@ -77,27 +77,27 @@ document::document(const std::string &file_location)
   }
 }
 
-auto document::begin() const
+auto Document::begin() const
 {
   return doc.begin();
 }
 
-auto document::end() const
+auto Document::end() const
 {
   return doc.end();
 }
 
-auto document::size() const
+auto Document::size() const
 {
   return doc.size();
 }
 
-auto &document::operator[](size_t index)
+auto &Document::operator[](size_t index)
 {
   return doc[index];
 }
 
-const std::string& document::getFileName() const
+const std::string& Document::getFileName() const
 {
   return this->file_name;
 }

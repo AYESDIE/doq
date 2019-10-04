@@ -12,35 +12,35 @@
 
 namespace doq {
 template<size_t N>
-class term_matrix_unit {
+class TermMatrixUnit {
 public:
   /**
    * Unit for term_matrix
    * @param term - Term to be stored.
    */
-  inline term_matrix_unit(const std::string &term);
+  inline TermMatrixUnit(const std::string &term);
 
   /**
-   * Returns term_matrix_unit.bitset.
-   * @return - term_matrix_unit.bitset
+   * Returns TermMatrixUnit.bitset.
+   * @return - TermMatrixUnit.bitset
    */
   inline const std::bitset<N>& getBitset() const;
 
   /**
-   * Returns term_matrix_unit.term.
-   * @return - term_matrix_unit.term
+   * Returns TermMatrixUnit.term.
+   * @return - TermMatrixUnit.term
    */
   inline const std::string& getTerm() const;
 
-  inline bool operator<(const term_matrix_unit &rhs) const;
-  inline bool operator>(const term_matrix_unit &rhs) const;
-  inline bool operator<=(const term_matrix_unit &rhs) const;
-  inline bool operator>=(const term_matrix_unit &rhs) const;
+  inline bool operator<(const TermMatrixUnit &rhs) const;
+  inline bool operator>(const TermMatrixUnit &rhs) const;
+  inline bool operator<=(const TermMatrixUnit &rhs) const;
+  inline bool operator>=(const TermMatrixUnit &rhs) const;
   inline auto operator[](size_t i);
 
-  inline term_matrix_unit<N> operator&&(const term_matrix_unit& rhs);
-  inline term_matrix_unit<N> operator||(const term_matrix_unit& rhs);
-  inline term_matrix_unit<N> operator!();
+  inline TermMatrixUnit<N> operator&&(const TermMatrixUnit& rhs);
+  inline TermMatrixUnit<N> operator||(const TermMatrixUnit& rhs);
+  inline TermMatrixUnit<N> operator!();
 
 private:
   std::bitset<N> bitset;
@@ -48,74 +48,74 @@ private:
 };
 
 template<size_t N>
-term_matrix_unit<N>::term_matrix_unit(const std::string &term)
+TermMatrixUnit<N>::TermMatrixUnit(const std::string &term)
 {
   this->term = term;
   bitset.reset();
 }
 
 template<size_t N>
-const std::bitset <N> &term_matrix_unit<N>::getBitset() const
+const std::bitset <N> &TermMatrixUnit<N>::getBitset() const
 {
   return bitset;
 }
 
 template<size_t N>
-const std::string &term_matrix_unit<N>::getTerm() const
+const std::string &TermMatrixUnit<N>::getTerm() const
 {
   return term;
 }
 
 template<size_t N>
-bool term_matrix_unit<N>::operator<(const term_matrix_unit &rhs) const
+bool TermMatrixUnit<N>::operator<(const TermMatrixUnit &rhs) const
 {
   return term < rhs.term;
 }
 
 template<size_t N>
-bool term_matrix_unit<N>::operator>(const term_matrix_unit &rhs) const
+bool TermMatrixUnit<N>::operator>(const TermMatrixUnit &rhs) const
 {
   return rhs < *this;
 }
 
 template<size_t N>
-bool term_matrix_unit<N>::operator<=(const term_matrix_unit &rhs) const
+bool TermMatrixUnit<N>::operator<=(const TermMatrixUnit &rhs) const
 {
   return !(rhs < *this);
 }
 
 template<size_t N>
-bool term_matrix_unit<N>::operator>=(const term_matrix_unit &rhs) const
+bool TermMatrixUnit<N>::operator>=(const TermMatrixUnit &rhs) const
 {
   return !(*this < rhs);
 }
 
 template<size_t N>
-auto term_matrix_unit<N>::operator[](size_t i)
+auto TermMatrixUnit<N>::operator[](size_t i)
 {
   return bitset[i];
 }
 
 template<size_t N>
-term_matrix_unit<N> term_matrix_unit<N>::operator&&(const term_matrix_unit &rhs)
+TermMatrixUnit<N> TermMatrixUnit<N>::operator&&(const TermMatrixUnit &rhs)
 {
-  term_matrix_unit<N> result("(" + this->getTerm() + " AND " + rhs.getTerm() + ")");
+  TermMatrixUnit<N> result("(" + this->getTerm() + " AND " + rhs.getTerm() + ")");
   result.bitset = this->bitset & rhs.bitset;
   return result;
 }
 
 template<size_t N>
-term_matrix_unit<N> term_matrix_unit<N>::operator||(const term_matrix_unit &rhs)
+TermMatrixUnit<N> TermMatrixUnit<N>::operator||(const TermMatrixUnit &rhs)
 {
-  term_matrix_unit<N> result("(" + this->getTerm() + " OR " + rhs.getTerm() + ")");
+  TermMatrixUnit<N> result("(" + this->getTerm() + " OR " + rhs.getTerm() + ")");
   result.bitset = this->bitset | rhs.bitset;
   return result;
 }
 
 template<size_t N>
-term_matrix_unit<N> term_matrix_unit<N>::operator!()
+TermMatrixUnit<N> TermMatrixUnit<N>::operator!()
 {
-  term_matrix_unit<N> result("( NOT " + this->getTerm() + ")");
+  TermMatrixUnit<N> result("( NOT " + this->getTerm() + ")");
   result.bitset = ~this->bitset;
   return result;
 }

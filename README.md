@@ -17,11 +17,11 @@ Usage:
 
 int main()
 {
-    document D1("julius_caesar.txt"),
-                  D2("hamlet.txt");
+    Document D1("julius_caesar.txt"),
+             D2("hamlet.txt");
 
-    term_matrix<vanilla_tokenization, 2> TM(vanilla_tokenization(),
-                                            D1, D2);
+    TermMatrix<VanillaTokenization, 2> TM(VanillaTokenization(),
+                                          D1, D2);
     
     TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM["Calpurnia"]));
 

@@ -11,24 +11,24 @@
 
 namespace doq
 {
-class vanilla_posting
+class VanillaPosting
 {
 public:
-  inline vanilla_posting(const std::string& term);
+  inline VanillaPosting(const std::string& term);
 
   inline void addDocumentId();
 
   template <typename... T>
   inline void addDocumentId(const size_t& Id, const T... Ts);
 
-  inline bool operator<(const vanilla_posting &rhs) const;
-  inline bool operator>(const vanilla_posting &rhs) const;
-  inline bool operator<=(const vanilla_posting &rhs) const;
-  inline bool operator>=(const vanilla_posting &rhs) const;
+  inline bool operator<(const VanillaPosting &rhs) const;
+  inline bool operator>(const VanillaPosting &rhs) const;
+  inline bool operator<=(const VanillaPosting &rhs) const;
+  inline bool operator>=(const VanillaPosting &rhs) const;
 
-  inline vanilla_posting operator&&(const vanilla_posting& rhs);
-  inline vanilla_posting operator||(const vanilla_posting& rhs);
-  inline vanilla_posting operator!();
+  inline VanillaPosting operator&&(const VanillaPosting& rhs);
+  inline VanillaPosting operator||(const VanillaPosting& rhs);
+  inline VanillaPosting operator!();
 
   inline auto operator[](const size_t& index);
   inline auto size();
@@ -47,18 +47,18 @@ private:
   size_t MAX_SIZE;
 };
 
-vanilla_posting::vanilla_posting(const std::string &term) :
+VanillaPosting::VanillaPosting(const std::string &term) :
   term(term)
 {
   frequency = 0;
   document_id.clear();
 }
 
-void vanilla_posting::addDocumentId()
+void VanillaPosting::addDocumentId()
 { /* does nothing */ }
 
 template <typename... T>
-void vanilla_posting::addDocumentId(const size_t &Id, const T... Ts)
+void VanillaPosting::addDocumentId(const size_t &Id, const T... Ts)
 {
   if (document_id.empty())
   {
@@ -75,12 +75,12 @@ void vanilla_posting::addDocumentId(const size_t &Id, const T... Ts)
   MAX_SIZE = *(document_id.end() - 1);
 }
 
-vanilla_posting vanilla_posting::operator&&(const vanilla_posting& rhs)
+VanillaPosting VanillaPosting::operator&&(const VanillaPosting& rhs)
 {
   auto lhsiter = this->document_id.begin();
   auto rhsiter = rhs.document_id.begin();
 
-  vanilla_posting result("(" + this->getTerm() + " AND " + rhs.getTerm() + ")");
+  VanillaPosting result("(" + this->getTerm() + " AND " + rhs.getTerm() + ")");
 
   while ((lhsiter != this->document_id.end()) && (rhsiter != rhs.document_id.end()))
   {
@@ -103,12 +103,12 @@ vanilla_posting vanilla_posting::operator&&(const vanilla_posting& rhs)
   return result;
 }
 
-vanilla_posting vanilla_posting::operator||(const vanilla_posting& rhs)
+VanillaPosting VanillaPosting::operator||(const VanillaPosting& rhs)
 {
   auto lhsiter = this->document_id.begin();
   auto rhsiter = rhs.document_id.begin();
 
-  vanilla_posting result("(" + this->getTerm() + " OR " + rhs.getTerm() + ")");
+  VanillaPosting result("(" + this->getTerm() + " OR " + rhs.getTerm() + ")");
 
   while ((lhsiter != this->document_id.end()) && (rhsiter != rhs.document_id.end()))
   {
@@ -150,9 +150,9 @@ vanilla_posting vanilla_posting::operator||(const vanilla_posting& rhs)
   return result;
 }
 
-vanilla_posting vanilla_posting::operator!()
+VanillaPosting VanillaPosting::operator!()
 {
-  vanilla_posting result("(NOT " + this->getTerm() + ")");
+  VanillaPosting result("(NOT " + this->getTerm() + ")");
 
   auto iter = this->getDocumentId().begin();
 
@@ -171,49 +171,49 @@ vanilla_posting vanilla_posting::operator!()
   return result;
 }
 
-  auto vanilla_posting::operator[](const size_t &index)
+  auto VanillaPosting::operator[](const size_t &index)
 {
   return document_id[index];
 }
 
-auto vanilla_posting::size()
+auto VanillaPosting::size()
 {
   return document_id.size();
 }
 
-const std::string& vanilla_posting::getTerm() const
+const std::string& VanillaPosting::getTerm() const
 {
   return term;
 }
 
-size_t vanilla_posting::getFrequency() const
+size_t VanillaPosting::getFrequency() const
 {
   return frequency;
 }
 
-const std::vector<size_t>& vanilla_posting::getDocumentId() const
+const std::vector<size_t>& VanillaPosting::getDocumentId() const
 {
   return document_id;
 }
 
-void vanilla_posting::setMaxSize(size_t maxSize)
+void VanillaPosting::setMaxSize(size_t maxSize)
 {
   MAX_SIZE = maxSize;
 }
 
-bool vanilla_posting::operator<(const vanilla_posting &rhs) const {
+bool VanillaPosting::operator<(const VanillaPosting &rhs) const {
   return term < rhs.term;
 }
 
-bool vanilla_posting::operator>(const vanilla_posting &rhs) const {
+bool VanillaPosting::operator>(const VanillaPosting &rhs) const {
   return rhs < *this;
 }
 
-bool vanilla_posting::operator<=(const vanilla_posting &rhs) const {
+bool VanillaPosting::operator<=(const VanillaPosting &rhs) const {
   return !(rhs < *this);
 }
 
-bool vanilla_posting::operator>=(const vanilla_posting &rhs) const {
+bool VanillaPosting::operator>=(const VanillaPosting &rhs) const {
   return !(*this < rhs);
 }
 }

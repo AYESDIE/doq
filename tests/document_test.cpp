@@ -8,14 +8,14 @@
 TEST_CASE("DocumentNameTest", "[DocumentTest]")
 {
   std::string file_location = "data/document_test.txt";
-  doq::document D1(file_location);
+  doq::Document D1(file_location);
   REQUIRE(D1.getFileName() == std::string("document_test.txt"));
 }
 
 TEST_CASE("DocumentContentTest", "[DocumentTest]")
 {
   std::string file_location = "data/document_test.txt";
-  doq::document D1(file_location);
+  doq::Document D1(file_location);
 
   std::string doc;
   std::ifstream fin(file_location);
