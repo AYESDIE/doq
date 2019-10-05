@@ -11,6 +11,7 @@
 
 #include "include/document.hpp"
 #include "include/posting_list.hpp"
+#include "include/soundex.hpp"
 #include "include/term_matrix.hpp"
 #include "include/term_matrix_unit.hpp"
 

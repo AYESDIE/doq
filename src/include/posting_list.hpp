@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include "document.hpp"
+#include "soundex.hpp"
 
 #ifndef DOQ_POSTING_LIST_HPP
 #define DOQ_POSTING_LIST_HPP
@@ -33,6 +34,7 @@ public:
   inline void print();
 
   inline PostingPolicy operator[](const std::string& S);
+  inline PostingPolicy operator[](const doq::Soundex& S);
 
 private:
   TokenizationPolicy tokenizer;
@@ -144,6 +146,25 @@ PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const s
   }
 
   PostingPolicy temp(S);
+  temp.setMaxSize(SIZE - 1);
+  return temp;
+}
+
+template<typename TokenizationPolicy, typename PostingPolicy>
+PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const doq::Soundex &S)
+{
+  auto term = S.getTerm();
+
+  for (auto u : list)
+  {
+    auto query = u.getTerm();
+    Soundex::apply(query);
+
+    if (query == term)
+      return u;
+  }
+
+  PostingPolicy temp(S.getTerm());
   temp.setMaxSize(SIZE - 1);
   return temp;
 }

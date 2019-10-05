@@ -15,6 +15,8 @@ Usage:
 ```cpp
 #include <doq.hpp>
 
+using namespace doq;
+
 int main()
 {
     Document D1("julius_caesar.txt"),
@@ -23,7 +25,7 @@ int main()
     TermMatrix<VanillaTokenization, 2> TM(VanillaTokenization(),
                                           D1, D2);
     
-    TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM["Calpurnia"]));
+    TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM[Soundex("Kalpernia")]));
 
     return 0;
 }

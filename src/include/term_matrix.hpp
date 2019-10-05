@@ -57,6 +57,7 @@ public:
   inline void showMatrix();
 
   inline TermMatrixUnit<N> operator[](const std::string& S);
+  inline TermMatrixUnit<N> operator[](const Soundex& S);
 
 private:
   TokenizationPolicy tokenizer;
@@ -174,13 +175,30 @@ void TermMatrix<TokenizationPolicy, N>::stat()
   std::cout << std::endl << "DISTINCT TERMS: " << matrix.size();
 }
 
-  template <typename TokenizationPolicy,
+template <typename TokenizationPolicy,
           size_t N>
 TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const std::string &S)
 {
   for (auto unit : matrix)
   {
     if (unit.getTerm() == S)
+      return unit;
+  }
+
+  return TermMatrixUnit<N>("");
+}
+
+template<typename TokenizationPolicy, size_t N>
+TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const Soundex &S)
+{
+  auto term = S.getTerm();
+
+  for (auto unit : matrix)
+  {
+    auto query = unit.getTerm();
+    Soundex::apply(query);
+
+    if (query == term)
       return unit;
   }
 
