@@ -44,20 +44,20 @@ const std::string VanillaTokenizer::nextToken()
   std::string result;
   
   while (!((D[seek] == ' ') ||
-         (D[seek] == '.') ||
-         (D[seek] == ',') ||
-         (D[seek] == ';') ||
-         (D[seek] == '\'') ||
-         (D[seek] == '"') ||
-         (D[seek] == '(') ||
-         (D[seek] == ')') ||
-         (D[seek] == '!') ||
-         (D[seek] == '-') ||
-         (D[seek] == ':') ||
-         (D[seek] == '0') ||
-         (D[seek] == '\n') ||
-         (D[seek] == '\t') ||
-         (D[seek] == '\0')))
+      (D[seek] == '.') ||
+      (D[seek] == ',') ||
+      (D[seek] == ';') ||
+      (D[seek] == '\'') ||
+      (D[seek] == '"') ||
+      (D[seek] == '(') ||
+      (D[seek] == ')') ||
+      (D[seek] == '!') ||
+      (D[seek] == '-') ||
+      (D[seek] == ':') ||
+      (D[seek] == '0') ||
+      (D[seek] == '\n') ||
+      (D[seek] == '\t') ||
+      (D[seek] == '\0')))
   {
     result += D[seek];
     seek++;

@@ -8,7 +8,7 @@
 TEST_CASE("VanillaTokenizationBasicTest", "[VanillaTokenizationTest]")
 {
   doq::Document D1("data/macbeth.txt"),
-                D2("data/othello.txt");
+      D2("data/othello.txt");
 
   doq::VanillaTokenizer VT;
   VT.setDocument(D1);

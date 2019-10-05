@@ -201,19 +201,23 @@ void VanillaPosting::setMaxSize(size_t maxSize)
   MAX_SIZE = maxSize;
 }
 
-bool VanillaPosting::operator<(const VanillaPosting &rhs) const {
+bool VanillaPosting::operator<(const VanillaPosting &rhs) const
+{
   return term < rhs.term;
 }
 
-bool VanillaPosting::operator>(const VanillaPosting &rhs) const {
+bool VanillaPosting::operator>(const VanillaPosting &rhs) const
+{
   return rhs < *this;
 }
 
-bool VanillaPosting::operator<=(const VanillaPosting &rhs) const {
+bool VanillaPosting::operator<=(const VanillaPosting &rhs) const
+{
   return !(rhs < *this);
 }
 
-bool VanillaPosting::operator>=(const VanillaPosting &rhs) const {
+bool VanillaPosting::operator>=(const VanillaPosting &rhs) const
+{
   return !(*this < rhs);
 }
 }

@@ -55,8 +55,8 @@ PostingList<TokenizationPolicy, PostingPolicy>::PostingList()
 template<typename TokenizationPolicy, typename PostingPolicy>
 template<typename... T>
 PostingList<TokenizationPolicy, PostingPolicy>::PostingList(const TokenizationPolicy& tokenizer,
-                                                            const Document& D,
-                                                            const T... Ds)
+    const Document& D,
+    const T... Ds)
 {
   SIZE = 0;
   this->tokenizer = tokenizer;
@@ -78,7 +78,7 @@ void PostingList<TokenizationPolicy, PostingPolicy>::addDocument()
 template<typename TokenizationPolicy, typename PostingPolicy>
 template<typename... T>
 void PostingList<TokenizationPolicy, PostingPolicy>::addDocument(const Document& D,
-                                                                  const T... Ds)
+    const T... Ds)
 {
   document_list.push_back(D.getFileName());
   tokenizer.setDocument(D);
@@ -96,7 +96,7 @@ void PostingList<TokenizationPolicy, PostingPolicy>::addDocument(const Document&
 
 template<typename TokenizationPolicy, typename PostingPolicy>
 void PostingList<TokenizationPolicy, PostingPolicy>::addTerm(const std::string &S,
-                                                              const size_t &index)
+    const size_t &index)
 {
   for (int i = 0; i < list.size(); ++i)
   {

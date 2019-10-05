@@ -86,8 +86,8 @@ template <typename TokenizationPolicy,
           size_t N>
 template<typename... I>
 TermMatrix<TokenizationPolicy, N>::TermMatrix(TokenizationPolicy tokenizer,
-                                                const Document& D,
-                                                const I... Ds)
+    const Document& D,
+    const I... Ds)
 {
   MAX_SIZE = N;
   SIZE = 0;

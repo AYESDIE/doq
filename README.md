@@ -23,7 +23,7 @@ int main()
              D2("hamlet.txt");
 
     TermMatrix<VanillaTokenization, 2> TM(VanillaTokenization(),
-                                          D1, D2);
+        D1, D2);
     
     TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM[Soundex("Kalpernia")]));
 
