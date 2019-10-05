@@ -14,10 +14,13 @@ public:
 
   inline const std::string &getTerm() const;
 
+  inline const std::string &getSoundexTerm() const;
+
   inline static void apply(std::string& S);
 
 
 private:
+  std::string soundexTerm;
   std::string term;
 
   inline static char soundexIndexer(const char& s);
@@ -26,12 +29,18 @@ private:
 Soundex::Soundex(const std::string &S) :
   term(S)
 {
-  apply(term);
+  soundexTerm = S;
+  apply(soundexTerm);
 }
 
 const std::string &Soundex::getTerm() const
 {
   return term;
+}
+
+const std::string &Soundex::getSoundexTerm() const
+{
+  return soundexTerm;
 }
 
 void Soundex::apply(std::string &S)

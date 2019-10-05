@@ -153,7 +153,8 @@ PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const s
 template<typename TokenizationPolicy, typename PostingPolicy>
 PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const doq::Soundex &S)
 {
-  auto term = S.getTerm();
+  PostingPolicy temp("SOUNDEX(" + S.getTerm() + ")");
+  auto term = S.getSoundexTerm();
 
   for (auto u : list)
   {
@@ -161,10 +162,17 @@ PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const d
     Soundex::apply(query);
 
     if (query == term)
-      return u;
+    {
+      auto docId = u.getDocumentId();
+      for (const auto &item : docId)
+      {
+        temp.addDocumentId(item);
+      }
+
+      return temp;
+    }
   }
 
-  PostingPolicy temp(S.getTerm());
   temp.setMaxSize(SIZE - 1);
   return temp;
 }

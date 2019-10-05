@@ -191,7 +191,8 @@ TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const std::strin
 template<typename TokenizationPolicy, size_t N>
 TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const Soundex &S)
 {
-  auto term = S.getTerm();
+  TermMatrixUnit<N> result("SOUNDEX(" + S.getTerm() +")");
+  auto term = S.getSoundexTerm();
 
   for (auto unit : matrix)
   {
@@ -199,10 +200,16 @@ TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const Soundex &S
     Soundex::apply(query);
 
     if (query == term)
-      return unit;
+    {
+      for (size_t i = 0; i < N; ++i)
+      {
+        result[i] = unit[i];
+      }
+      return result;
+    }
   }
 
-  return TermMatrixUnit<N>("");
+  return result;
 }
 
 template <typename TokenizationPolicy,
