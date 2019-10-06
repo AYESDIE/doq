@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <iostream>
 #include "document.hpp"
 #include "soundex.hpp"
 

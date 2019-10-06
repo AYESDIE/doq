@@ -5,9 +5,9 @@
 #include "catch.hpp"
 #include <doq.hpp>
 
-TEST_CASE("VanillaPostingBasicTest", "[VanillaPostingTest]")
+TEST_CASE("VanillaPosterBasicTest", "[VanillaPosterTest]")
 {
-  doq::VanillaPosting VP1("Apple"), VP2("bowl");
+  doq::VanillaPoster VP1("Apple"), VP2("bowl");
 
   REQUIRE(VP1.getTerm() == std::string("Apple"));
   REQUIRE(VP2.getTerm() == std::string("bowl"));
@@ -19,9 +19,9 @@ TEST_CASE("VanillaPostingBasicTest", "[VanillaPostingTest]")
   REQUIRE(VP2.getFrequency() == 0);
 }
 
-TEST_CASE("VanillaPostingAddDocumentTest", "[VanillaPostingTest]")
+TEST_CASE("VanillaPosterAddDocumentTest", "[VanillaPosterTest]")
 {
-  doq::VanillaPosting VP1("Apple"), VP2("bowl");
+  doq::VanillaPoster VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0);
   REQUIRE(!VP1.getDocumentId().empty());
@@ -37,9 +37,9 @@ TEST_CASE("VanillaPostingAddDocumentTest", "[VanillaPostingTest]")
   REQUIRE(VP2[2] == 5);
 }
 
-TEST_CASE("VanillaPostingAndOperationsTest", "[VanillaPostingTest]")
+TEST_CASE("VanillaPosterAndOperationsTest", "[VanillaPosterTest]")
 {
-  doq::VanillaPosting VP1("Apple"), VP2("bowl");
+  doq::VanillaPoster VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0, 1, 2);
   VP2.addDocumentId(0, 1, 2, 3);
@@ -51,9 +51,9 @@ TEST_CASE("VanillaPostingAndOperationsTest", "[VanillaPostingTest]")
   REQUIRE(U1[2] == 2);
 }
 
-TEST_CASE("VanillaPostingOrOperationsTest", "[VanillaPostingTest]")
+TEST_CASE("VanillaPosterOrOperationsTest", "[VanillaPosterTest]")
 {
-  doq::VanillaPosting VP1("Apple"), VP2("bowl");
+  doq::VanillaPoster VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0, 1);
   VP2.addDocumentId(2);
@@ -66,9 +66,9 @@ TEST_CASE("VanillaPostingOrOperationsTest", "[VanillaPostingTest]")
   REQUIRE(U2[2] == 2);
 }
 
-TEST_CASE("VanillaPostingNotOperationsTest", "[VanillaPostingTest]")
+TEST_CASE("VanillaPosterNotOperationsTest", "[VanillaPosterTest]")
 {
-  doq::VanillaPosting VP1("Apple"), VP2("bowl");
+  doq::VanillaPoster VP1("Apple"), VP2("bowl");
 
   VP1.addDocumentId(0, 2);
 
@@ -83,7 +83,4 @@ TEST_CASE("VanillaPostingNotOperationsTest", "[VanillaPostingTest]")
   REQUIRE(U2.size() == 2);
   REQUIRE(U2[0] == 1);
   REQUIRE(U2[1] == 3);
-
-
-
 }

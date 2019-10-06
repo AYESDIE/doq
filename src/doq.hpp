@@ -5,7 +5,7 @@
 #ifndef DOQ_HPP
 #define DOQ_HPP
 
-#include "include/posting_policy/vanilla_posting.hpp"
+#include "include/posting_policy/vanilla_poster.hpp"
 
 #include "include/tokenization_policy/vanilla_tokenizer.hpp"
 
