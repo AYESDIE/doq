@@ -7,6 +7,7 @@ set(DOQ_TESTS_SOURCES
     soundex_text.cpp
     term_matrix_test.cpp
     term_matrix_unit_test.cpp
+    vanilla_indexer_listing_test.cpp
     vanilla_poster_test.cpp
     vanilla_tokenization_test.cpp
     )
