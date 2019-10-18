@@ -25,7 +25,7 @@ int main()
     TermMatrix<VanillaTokenization, 2> TM(VanillaTokenization(),
         D1, D2);
     
-    TM.stat(TM["Brutus"] && TM["Caesar"] && (!TM[Soundex("Kalpernia")]));
+    TM.stat(TM[Wildcard("Bru*us")] && TM["Caesar"] && (!TM[Soundex("Kalpernia")]));
 
     return 0;
 }

@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "term_matrix_unit.hpp"
 #include "document.hpp"
+#include "wildcard.hpp"
 
 #ifndef DOQ_TERM_MATRIX_HPP
 #define DOQ_TERM_MATRIX_HPP
@@ -58,6 +59,7 @@ public:
 
   inline TermMatrixUnit<N> operator[](const std::string& S);
   inline TermMatrixUnit<N> operator[](const Soundex& S);
+  inline TermMatrixUnit<N> operator[](const Wildcard& W);
 
 private:
   TokenizationPolicy tokenizer;
@@ -212,8 +214,29 @@ TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const Soundex &S
   return result;
 }
 
-template <typename TokenizationPolicy,
-          size_t N>
+template<typename TokenizationPolicy, size_t N>
+TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const Wildcard &W)
+{
+  TermMatrixUnit<N> result("WILDCARD(" + W.getTerm() + ")");
+
+  for (auto unit : matrix)
+  {
+    auto term = unit.getTerm();
+
+    if (W.check(term))
+    {
+      for (size_t i = 0; i < N; ++i)
+      {
+        result[i] = unit[i];
+      }
+      return result;
+    }
+  }
+
+  return result;
+}
+
+template <typename TokenizationPolicy, size_t N>
 void TermMatrix<TokenizationPolicy, N>::showMatrix()
 {
   std::cout << std::endl;

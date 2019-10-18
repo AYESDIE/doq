@@ -6,8 +6,10 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <doq.hpp>
 #include "document.hpp"
 #include "soundex.hpp"
+#include "wildcard.hpp"
 
 #ifndef DOQ_POSTING_LIST_HPP
 #define DOQ_POSTING_LIST_HPP
@@ -36,6 +38,7 @@ public:
 
   inline PostingPolicy operator[](const std::string& S);
   inline PostingPolicy operator[](const doq::Soundex& S);
+  inline PostingPolicy operator[](const doq::Wildcard& W);
 
 private:
   TokenizationPolicy tokenizer;
@@ -154,28 +157,53 @@ PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const s
 template<typename TokenizationPolicy, typename PostingPolicy>
 PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const doq::Soundex &S)
 {
-  PostingPolicy temp("SOUNDEX(" + S.getTerm() + ")");
+  PostingPolicy result("SOUNDEX(" + S.getTerm() + ")");
   auto term = S.getSoundexTerm();
 
-  for (auto u : list)
+  for (auto unit : list)
   {
-    auto query = u.getTerm();
+    auto query = unit.getTerm();
     Soundex::apply(query);
 
     if (query == term)
     {
-      auto docId = u.getDocumentId();
+      auto docId = unit.getDocumentId();
       for (const auto &item : docId)
       {
-        temp.addDocumentId(item);
+        result.addDocumentId(item);
       }
 
-      return temp;
+      return result;
     }
   }
 
-  temp.setMaxSize(SIZE - 1);
-  return temp;
+  result.setMaxSize(SIZE - 1);
+  return result;
+}
+
+template<typename TokenizationPolicy, typename PostingPolicy>
+PostingPolicy PostingList<TokenizationPolicy, PostingPolicy>::operator[](const doq::Wildcard &W)
+{
+  PostingPolicy result("WILDCARD(" + W.getTerm() + ")");
+
+  for (auto unit : list)
+  {
+    auto term = unit.getTerm();
+
+    if (W.check(term))
+    {
+      auto docId = unit.getDocumentId();
+      for (const auto &item : docId)
+      {
+        result.addDocumentId(item);
+      }
+
+      return result;
+    }
+  }
+
+  result.setMaxSize(SIZE - 1);
+  return result;
 }
 
 template<typename TokenizationPolicy, typename PostingPolicy>

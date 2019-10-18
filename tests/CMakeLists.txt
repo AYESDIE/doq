@@ -9,6 +9,7 @@ set(DOQ_TESTS_SOURCES
     term_matrix_unit_test.cpp
     vanilla_poster_test.cpp
     vanilla_tokenization_test.cpp
+    wildcard_test.cpp
     )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

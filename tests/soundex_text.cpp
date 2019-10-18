@@ -5,7 +5,7 @@
 #include "catch.hpp"
 #include <doq.hpp>
 
-TEST_CASE("SoundexTestBasis", "[SoundexTest]")
+TEST_CASE("SoundexTestBasic", "[SoundexTest]")
 {
   std::string h = "Hermann";
   doq::Soundex::apply(h);

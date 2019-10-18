@@ -14,5 +14,6 @@
 #include "include/soundex.hpp"
 #include "include/term_matrix.hpp"
 #include "include/term_matrix_unit.hpp"
+#include "include/wildcard.hpp"
 
 #endif //DOQ_HPP
