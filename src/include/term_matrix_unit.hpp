@@ -115,7 +115,7 @@ TermMatrixUnit<N> TermMatrixUnit<N>::operator||(const TermMatrixUnit &rhs)
 template<size_t N>
 TermMatrixUnit<N> TermMatrixUnit<N>::operator!()
 {
-  TermMatrixUnit<N> result("( NOT " + this->getTerm() + ")");
+  TermMatrixUnit<N> result("(NOT " + this->getTerm() + ")");
   result.bitset = ~this->bitset;
   return result;
 }

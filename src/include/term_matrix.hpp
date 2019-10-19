@@ -187,7 +187,7 @@ TermMatrixUnit<N> TermMatrix<TokenizationPolicy, N>::operator[](const std::strin
       return unit;
   }
 
-  return TermMatrixUnit<N>("");
+  return TermMatrixUnit<N>(S);
 }
 
 template<typename TokenizationPolicy, size_t N>
